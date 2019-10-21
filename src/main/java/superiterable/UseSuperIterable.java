@@ -2,8 +2,7 @@ package superiterable;
 
 import students.Student;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class UseSuperIterable {
     public static void main(String[] args) {
@@ -40,5 +39,28 @@ public class UseSuperIterable {
                 .flatMap(s -> s.getCourses().stream())
                 .forEach(s -> System.out.println(s));
         System.out.println("---------------------");
+
+        SuperIterable<String> empty = new SuperIterable<>(Arrays.asList());
+        empty
+                .map(s -> s.toUpperCase())
+                .forEach(System.out::println);
+
+        System.out.println("---------------------");
+
+        Map<String, String> names = new HashMap<>();
+        names.put("Fred", "Jones");
+        String firstName = "Fred";
+
+        String lastName = names.get(firstName);
+        if (lastName != null) {
+            String message = "Dear " + lastName.toUpperCase();
+            System.out.println(message);
+        }
+
+        System.out.println("------------------");
+        Optional.of(names)
+                .map(m -> m.get(firstName))
+                .map(s -> "Dear " + s.toUpperCase())
+                .ifPresent(System.out::println);
     }
 }

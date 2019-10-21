@@ -2,11 +2,21 @@ package students;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Student {
     private final String name;
     private final int grade;
     private final List<String> courses;
+
+    public static Predicate<Student> getSmartPredicate(/*final */int threshold) {
+//        threshold ++;
+        return s -> s.grade > threshold;
+    }
+
+    public static Predicate<Student> getEnthousiasticPredicate(int threshold) {
+        return s -> s.getCourses().size() > threshold;
+    }
 
     public String getName() {
         return name;

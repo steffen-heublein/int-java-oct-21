@@ -7,15 +7,19 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class School3 {
+    public static <E> Predicate<E> not(Predicate<E> ps) {
+        return s -> !ps.test(s);
+    }
+
     public static <E> void doToAllStudents(Iterable<E> ls, Consumer<E> op) {
         for (E s : ls) {
             op.accept(s);
         }
     }
 
-    public static List<Student> selectStudents(Iterable<Student> ls, Predicate<Student> crit) {
-        List<Student> rv = new ArrayList<>();
-        for (Student s : ls) {
+    public static <E> List<E> selectStudents(Iterable<E> ls, Predicate<E> crit) {
+        List<E> rv = new ArrayList<>();
+        for (E s : ls) {
             if (crit.test(s)) {
                 rv.add(s);
             }
@@ -30,10 +34,15 @@ public class School3 {
                 Student.of("Sheila", 95, "Math", "Physics", "Optics", "Quantum Mechanics")
         );
         doToAllStudents(
-                selectStudents(students, s -> s.getGrade() > 70),
+                selectStudents(students, Student.getSmartPredicate(70)),
                 s-> System.out.println("> " + s));
-        System.out.println("--------------------");
-        doToAllStudents(selectStudents(students, s -> s.getCourses().size() > 2),
+        System.out.println("Enthusiastic --------------------");
+        Predicate<Student> enthusiastic = s -> s.getCourses().size() > 2;
+        doToAllStudents(selectStudents(students, enthusiastic),
+                s -> System.out.println(">> " + s));
+
+        System.out.println("Not Enthusiastic --------------------");
+        doToAllStudents(selectStudents(students, not(enthusiastic)),
                 s -> System.out.println(">> " + s));
 
         System.out.println("--------------------");

@@ -1,0 +1,37 @@
+
+Students:
+RULE (for the exercise): The stream pipeline must end with:
+ .forEach(System.out::println);
+--EXACTLY!!
+
+1) All student names
+2) All students shown with grade, in the form:
+   Fred has grade 3.2
+3) All "smart" students with grade and course count, e.g.:
+   Fred has grade 3.2 and takes 3 classes
+4) All the courses taken by all students (include duplicates)
+5) Use the API docs to modify 4 to exclude duplicates
+6) Use the API docs to modify 5 to show in alphabetical order
+7) Show all student/course combinations, e.g.:
+   Fred takes Math
+   Fred takes Physics
+   Jim takes Art History
+   Sheila takes Math
+   ... etc...
+
+Entirely with streams, no loops, no use of "substring". Simulate throwing ten dice at a time. Add up the face value (i.e. a result in the range 10-60). Repeat this 10,000 times, collecting the count of how many times each face-total shows up. Create a bar chart of the frequencies, something like:
+
+10: *
+[...]
+28: **********************************
+29: *************************************
+30: **************************************
+...etc...
+
+Pride and Prejudice:
+0) Print the most frequent 200 words, with counts, in descending order
+1) Build & print a table of word-length frequency
+2) Build & print a table of frequency of counts-of-distinct-letters in the words. I.e. the word "hello" has four distinct letters, while letters has five.
+3) Build a table of letter frequency for the book & print in descending order.
+5) Calculate the ratio of "distinct letters to actual letters" in the books words.
+

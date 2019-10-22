@@ -1,40 +1,49 @@
 package threads;
 
-import java.util.NoSuchElementException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class BadQueue<E> {
+public class BetterQueue<E> {
     private static final int CAPACITY = 10;
     private E[] data = (E[]) (new Object[CAPACITY]);
     private int count = 0;
 
-    public BadQueue() {
+    ReentrantLock lock = new ReentrantLock();
+    Condition NOT_FULL = lock.newCondition();
+    Condition NOT_EMPTY = lock.newCondition();
+
+    public BetterQueue() {
     }
 
     public void put(E e) throws InterruptedException {
 
-        synchronized (this) {
+        lock.lock();
+        try {
             while (count == CAPACITY)
-                this.wait();
+                NOT_FULL.await();
             data[count++] = e;
-//            this.notify();
-            this.notifyAll();
+            NOT_EMPTY.signal();
+        } finally {
+            lock.unlock();
         }
     }
 
     public E take() throws InterruptedException {
-        synchronized (this) {
+        lock.lock();
+        try {
             while (count == 0)
-                this.wait();
+                NOT_EMPTY.await();
             E rv = data[0];
             System.arraycopy(data, 1, data, 0, --count);
-//            this.notify();
-            this.notifyAll();
+            NOT_FULL.signal();
             return rv;
+        } finally {
+            lock.unlock();
         }
     }
 
     public static void main(String[] args) {
-        BadQueue<int[]> queue = new BadQueue<>();
+        BetterQueue<int[]> queue = new BetterQueue<>();
         new Thread(()->{
             System.out.println("Producer starting");
             for (int i = 0; i < 1_000; i++) {
@@ -69,27 +78,4 @@ public class BadQueue<E> {
         }).start();
         System.out.println("Producer and consumer started");
     }
-
-//
-//    public static void main(String[] args) {
-//        BadQueue<String> bqs = new BadQueue<>();
-//
-//        bqs.put("1");
-//        bqs.put("2");
-//        bqs.put("3");
-//        bqs.put("4");
-//        bqs.put("5");
-//        bqs.put("6");
-//        bqs.put("7");
-//        bqs.put("8");
-//        bqs.put("9");
-//        bqs.put("10");
-////        bqs.put("10");
-//
-//
-//        for (int i = 1; i <= 10; i++) {
-//            System.out.println("Taking " + bqs.take());
-//        }
-////        bqs.take();
-//    }
 }

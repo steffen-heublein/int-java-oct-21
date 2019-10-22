@@ -1,11 +1,13 @@
 package threads;
 
 class CounterJob implements Runnable {
-    public int counter = 0;
+    public /*volatile*/ int counter = 0;
     @Override
     public void run() {
         for (int i = 0; i < 10_000; i++) {
-            counter++;
+            synchronized (this) {
+                counter++;
+            }
         }
     }
 }

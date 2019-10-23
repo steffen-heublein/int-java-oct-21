@@ -1,0 +1,13 @@
+Clean Code, Robert C Martin
+Clean Architecture, Robert C Martin
+Java Concurrency in Practice, Brian Goetz
+Java Performance, Charlie Hunt
+Java Performance Companion, Charlie Hunt
+Effective Java, Joshua Bloch
+
+Java Specialists Newsletter: Heinz Kabutz
+https://www.javaspecialists.eu/
+
+The Java Tutorials (Java 8, Oracle)
+https://docs.oracle.com/javase/tutorial/
+

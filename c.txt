@@ -1,0 +1,4 @@
+This is another file
+it's called c.txt
+and it contains
+four lines
